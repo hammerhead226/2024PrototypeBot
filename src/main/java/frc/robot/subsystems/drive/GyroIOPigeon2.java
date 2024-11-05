@@ -24,7 +24,7 @@ import frc.robot.Constants;
 
 /** IO implementation for Pigeon2 */
 public class GyroIOPigeon2 implements GyroIO {
-  private final Pigeon2 pigeon = new Pigeon2(0, Constants.CANBUS);
+  private final Pigeon2 pigeon = new Pigeon2(0);
   private final StatusSignal<Double> yaw = pigeon.getYaw();
   private final StatusSignal<Double> yawVelocity = pigeon.getAngularVelocityZWorld();
   private final StatusSignal<Double> accelerationXDegSecSquared = pigeon.getAccelerationX();

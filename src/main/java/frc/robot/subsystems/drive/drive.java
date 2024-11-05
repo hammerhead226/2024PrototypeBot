@@ -32,6 +32,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -62,8 +63,8 @@ import java.util.Optional;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-public class Drive extends SubsystemBase {
-  private static final double MAX_LINEAR_SPEED = Constants.SwerveConstants.MAX_LINEAR_SPEED * 0.85;
+public class drive extends SubsystemBase {
+  private static final double MAX_LINEAR_SPEED = Constants.SwerveConstants.MAX_LINEAR_SPEED * 0.1;
   private static final double TRACK_WIDTH_X = Constants.SwerveConstants.TRACK_WIDTH_X;
   private static final double TRACK_WIDTH_Y = Constants.SwerveConstants.TRACK_WIDTH_Y;
   private static final double DRIVE_BASE_RADIUS = Constants.SwerveConstants.DRIVE_BASE_RADIUS;
@@ -86,7 +87,7 @@ public class Drive extends SubsystemBase {
   private final SysIdRoutine sysId;
 
   private final PIDController rotationController;
-
+ 
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
   private Rotation2d rawGyroRotation = new Rotation2d();
   private SwerveModulePosition[] lastModulePositions = // For delta tracking
@@ -96,6 +97,8 @@ public class Drive extends SubsystemBase {
         new SwerveModulePosition(),
         new SwerveModulePosition()
       };
+
+      
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
   TimestampedT2d lastNoteLocT2d = new TimestampedT2d(new Translation2d(0, 0), -1.);
@@ -117,9 +120,9 @@ public class Drive extends SubsystemBase {
 
   CircularBuffer<TimestampedPose2d> robotPoseBuffer;
 
+   
 
-
-  public Drive(
+  public drive(
       GyroIO gyroIO,
       VisionIO visionIO,
       ModuleIO flModuleIO,
