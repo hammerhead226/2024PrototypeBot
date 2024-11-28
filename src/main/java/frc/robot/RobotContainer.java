@@ -9,8 +9,14 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -33,6 +39,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final CommandXboxController driveController = new CommandXboxController(0);
+  private final LoggedDashboardChooser<Command> autoChooser;
+ private final SendableChooser<Command> autos;
   private final drive drive;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -64,6 +72,12 @@ public class RobotContainer {
                 new ModuleIO() {});
     }
     
+    autos = new SendableChooser<>();
+
+    autos.addOption("test path", AutoBuilder.buildAuto("Auto"));
+
+
+    autoChooser = new LoggedDashboardChooser<>("Auto Choices", autos);
     configureBindings();
 
   }
@@ -108,6 +122,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return autoChooser.get();
   }
 }
